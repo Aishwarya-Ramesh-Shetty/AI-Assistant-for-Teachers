@@ -19,7 +19,7 @@ export default function Signup() {
     }
 
     try {
-      const res = await axios.post('http://10.210.73.231:5000/api/auth/register', { name, email, password, role });
+      const res = await axios.post('http://192.168.1.33:5000/api/auth/register', { name, email, password, role });
 
       await AsyncStorage.setItem('token', res.data.token);
       await AsyncStorage.setItem('userType', res.data.user.role);

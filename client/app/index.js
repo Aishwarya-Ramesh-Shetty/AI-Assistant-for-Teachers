@@ -11,7 +11,7 @@ export default function Index() {
       const token = await AsyncStorage.getItem('token');
       const role = await AsyncStorage.getItem('userType');
 
-      if (token && role === 'teacher') router.replace('/dashboard/teacher');
+      if (token && role === 'teacher') router.replace('/teacher/dashboard');
       else if (token && role === 'student') router.replace('/dashboard/student');
       else router.replace('/auth/login');
     };

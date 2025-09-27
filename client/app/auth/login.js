@@ -9,6 +9,7 @@ export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -17,7 +18,7 @@ export default function Login() {
     }
 
     try {
-      const res = await axios.post('http://10.210.73.231:5000/api/auth/login', { email, password });
+      const res = await axios.post('http://192.168.1.33:5000/api/auth/login', { email, password });
 
       await AsyncStorage.setItem('token', res.data.token);
       await AsyncStorage.setItem('userType', res.data.user.role);
@@ -26,7 +27,11 @@ export default function Login() {
       else router.replace('/dashboard/student');
 
     } catch (err) {
-      Alert.alert('Login Failed', err.response?.data?.message || 'Try again');
+      if (err.response) {
+        setErrorMessage(`❌ ${err.response.data.message || "Server error"}`);
+      } else {
+        setErrorMessage(`❌ Network error: ${err.message}`);
+      }
     }
   };
 
